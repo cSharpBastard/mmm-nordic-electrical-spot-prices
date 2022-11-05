@@ -1,0 +1,30 @@
+{
+  "name": "mmm-nordic-electrical-spot-prices",
+  "version": "0.9.0",
+  "description": "Magic Mirror module that shows the nordic electrical spotprices by hour",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/cSharpBastard/MMM-Nordic-Electrical-Spot-Prices"
+  },
+  "keywords": [
+    "magic mirror",
+    "smart mirror",
+    "eon",
+    "electricity",
+    "module",
+    "motion"
+  ],
+  "author": "Jonas Katona",
+  "contributors": ["https://github.com/cSharpBastard/"],
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/cSharpBastard/MMM-Nordic-Electrical-Spot-Prices/issues"
+  },
+  "homepage": "https://github.com/cSharpBastard/MMM-Nordic-Electrical-Spot-Prices#readme",
+  "scripts": {
+    "postinstall": "node_modules/.bin/electron-rebuild -e ../../node_modules/electron"
+  },
+  "dependencies": {
+    "moment": "^2.29.4"
+  }
+}
