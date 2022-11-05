@@ -25,6 +25,7 @@
     "postinstall": "node_modules/.bin/electron-rebuild -e ../../node_modules/electron"
   },
   "dependencies": {
-    "moment": "^2.29.4"
+    "moment": "^2.29.4",
+    "request": "2.88.0"
   }
 }
