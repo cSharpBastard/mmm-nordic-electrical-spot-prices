@@ -9,6 +9,7 @@ This module us for showing the current electrical spot prices in northen europe.
 | Working | `1.0.0` | 2022-11-05 | Yes         |
 
 ## Dependencies
+- electron ^21.2.2
 - moment ^2.29.4
 - request ^2.88.0
 
