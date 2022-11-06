@@ -25,13 +25,9 @@ Module.register("mmm-nordic-electrical-spot-prices", {
     },
     scheduleUpdate: function (delay) {
         const self = this;
-        console.log("mmm-nordic-electrical-spot-prices scheduleUpdate Start")
-        var nextLoad = this.config.updateInterval;
-        if (typeof delay !== "undefined" && delay >= 0) {
-            nextLoad = delay;
-        }
+        console.log("mmm-nordic-electrical-spot-prices scheduleUpdate Start:" + String(delay));
         
-        setInterval(function () { self.getData() }, nextLoad);
+        setInterval(function () { self.getData() }, this.config.updateInterval);
     },
     getHeader: function () {
         return this.config.title;
