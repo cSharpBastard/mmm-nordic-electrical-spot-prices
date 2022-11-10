@@ -43,9 +43,16 @@ module.exports = NodeHelper.create({
                         const area = column.Name
                         if (this.config.area.indexOf(area) >= 0) {
                             if (date.format('HH') === now.format('HH'))
-                                values.push({ label: date.format('HH'), y: value, color: "red", indexLabel: value });
+                                values.push({ label: date.format('HH'), y: value, color: "blue", indexLabel: value });
                             else
-                                values.push({ label: date.format('HH'), y: value })
+                            {
+				if(value < 1.0)
+                                	values.push({ label: date.format('HH'), y: value, color: "green" })
+                                else if(value < 2.0)
+                                	values.push({ label: date.format('HH'), y: value, color: "orange" })
+				else
+                                	values.push({ label: date.format('HH'), y: value, color: "red" })
+                            }
                         }
                     }
                 }

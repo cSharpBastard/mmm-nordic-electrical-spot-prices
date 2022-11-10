@@ -26,7 +26,7 @@ Module.register("mmm-nordic-electrical-spot-prices", {
     scheduleUpdate: function (delay) {
         const self = this;
         console.log("mmm-nordic-electrical-spot-prices scheduleUpdate Start:" + String(delay));
-        
+
         setInterval(function () { self.getData() }, this.config.updateInterval);
     },
     getHeader: function () {
@@ -56,6 +56,7 @@ Module.register("mmm-nordic-electrical-spot-prices", {
         this.chart = new CanvasJS.Chart(id, {
             animationEnabled: false,
             theme: "dark1",
+            backgroundColor: "",
             axisY: {
                 title: this.config.yLegend,
                 titleFontSize: 24
