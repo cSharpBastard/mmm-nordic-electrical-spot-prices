@@ -49,6 +49,10 @@ module.exports = NodeHelper.create({
 				if(value < 1.0)
                                 	values.push({ label: date.format('HH'), y: value, color: "green" })
                                 else if(value < 2.0)
+                                	values.push({ label: date.format('HH'), y: value, color: "yellow" })
+                                else if(value < 3.0)
+                                	values.push({ label: date.format('HH'), y: value, color: "gold" })
+                                else if(value < 4.0)
                                 	values.push({ label: date.format('HH'), y: value, color: "orange" })
 				else
                                 	values.push({ label: date.format('HH'), y: value, color: "red" })
