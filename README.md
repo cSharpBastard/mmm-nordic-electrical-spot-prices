@@ -31,7 +31,7 @@ var config = {
     modules: [
         {
         ...
-            module: 'mmm-nordic-electrical-spot-prices"',
+            module: "mmm-nordic-electrical-spot-prices",
             position: "top_left",
             config: {
                 // See below for Configuration Options
