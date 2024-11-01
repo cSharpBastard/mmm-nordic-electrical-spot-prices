@@ -9,7 +9,7 @@ module.exports = NodeHelper.create({
     getData: function (p_date) {
         const self = this;
         const date = moment(p_date);
-
+	// CHange to new datasource: https://www.elprisetjustnu.se/api/v1/prices/2024/11-01_SE3.json
         var url = 'https://www.nordpoolgroup.com/api/marketdata/page/10?currency=';
         url = url + this.config.currency + ',' + this.config.currency + ',' + this.config.currency;
         url = url + '&endDate=' + date.format('dd-MM-yyyy');
