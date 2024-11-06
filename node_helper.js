@@ -1,19 +1,25 @@
 'use strict';
-const NodeHelper = require('node_helper');
+
 const request = require('request');
 const moment = require('moment');
+const NodeHelper = require('../../js/node_helper');
 
 module.exports = NodeHelper.create({
     config: {},
-    start: function () { },
+    start: function () {},
+    error: function (msg){
+	this.sendSocketNotification('ERROR', msg);
+    },
     getData: function (p_date) {
         const self = this;
         const date = moment(p_date);
-        var url = 'https://www.elprisetjustnu.se/api/v1/prices/' + date.format('yyyy[/]MM-dd[_]') + config.area + '.json';
+        const url = 'https://www.elprisetjustnu.se/api/v1/prices/' + date.format('yyyy/MM-DD_') + this.config.area + '.json';
         request({ url: url, method: 'GET' }, function (error, response, body) {
             if (!error && response.statusCode == 200) {
-                var result = JSON.parse(body);
+                const result = JSON.parse(body);
                 self.gotData(result);
+            } else {
+		self.error(response.statusCode);
             }
         });
     },
@@ -23,15 +29,18 @@ module.exports = NodeHelper.create({
             const data = result;
             if (data) {
                 const values = []
-                for (const row of data) {
-                    const date = moment(row.time_start, 'YYYY-MM-DDTHH:mm:ss', true);
+		for (let i = 0; i < data.length; i++) {
+                    const row = data[i];
+                    const date = moment(row.time_start.substring(0,19), 'YYYY-MM-DDTHH:mm:ss', true);
                     if (!date.isValid()) {
-                        continue
+			this.error("Invalid date");
+                        continue;
                     }
 
-                    const value = (config.currency === 'EUR') ? parseFloat(row.EURper_kWh) : parseFloat(row.SEK_per_kWh);
+                    const value = (this.config.currency === 'EUR') ? parseFloat(row.EUR_per_kWh) : parseFloat(row.SEK_per_kWh);
                     if (isNaN(value)) {
-                        continue
+			this.error("NaN");
+                        continue;
                     }
                     if (date.format('HH') === now.format('HH'))
                         values.push({ label: date.format('HH'), y: value, color: "blue", indexLabel: value });
@@ -52,17 +61,17 @@ module.exports = NodeHelper.create({
                 this.sendSocketNotification('SPOT_RECEIVED', values);
             }
             else
-                console.log("Invalid data:" + data);
+                this.error("Invalid data:" + data);
         } catch (ex) {
-            console.error(ex);
-		}
-	},
+            this.error(ex);
+	}
+    },
     //Subclass socketNotificationReceived received.
     socketNotificationReceived: function (notification, payload) {
         if (notification === 'GET_SPOTDATA') {
             this.getData(payload);
         } else if (notification === 'SET_CONFIG') {
             this.config = payload;
-		}
+	}
     }
 });

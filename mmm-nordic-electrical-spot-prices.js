@@ -9,7 +9,7 @@ Module.register("mmm-nordic-electrical-spot-prices", {
         title: "Dagens priser",
         yLegend: "Kr / kWh"
     },
-    dataPoints: {},
+    dataPoints: [],
     chart: {},
     getScripts: function () {
         return [
@@ -23,9 +23,9 @@ Module.register("mmm-nordic-electrical-spot-prices", {
         setTimeout(function () { self.getData() }, 3000);
         this.scheduleUpdate();
     },
-    scheduleUpdate: function (delay) {
+    scheduleUpdate: function () {
         const self = this;
-        console.log("mmm-nordic-electrical-spot-prices scheduleUpdate Start:" + String(delay));
+        console.log("mmm-nordic-electrical-spot-prices scheduleUpdate Start");
 
         setInterval(function () { self.getData() }, this.config.updateInterval);
     },
@@ -34,11 +34,12 @@ Module.register("mmm-nordic-electrical-spot-prices", {
     },
     shareConfig: function () {
         this.sendSocketNotification('SET_CONFIG', this.config);
-	},
+    },
     getData: function () {
-        const date = moment(new Date());
+        const date = moment();
+	console.log("getData");
         this.sendSocketNotification('GET_SPOTDATA', date);
-	},
+    },
     getDom: function () {
         var self = this;
         var wrapper = document.createElement("div");
@@ -48,9 +49,12 @@ Module.register("mmm-nordic-electrical-spot-prices", {
     },
     socketNotificationReceived: function (notification, payload) {
         if (notification === "SPOT_RECEIVED") {
+            console.log("gotData");
             this.dataPoints = payload;
             this.updateDom(this.config.fadeSpeed);
         }
+        else
+            console.log(payload);
     },
     createChart: function (id) {
         this.chart = new CanvasJS.Chart(id, {
