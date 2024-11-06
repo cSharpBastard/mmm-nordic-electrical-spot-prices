@@ -9,7 +9,7 @@ module.exports = NodeHelper.create({
     getData: function (p_date) {
         const self = this;
         const date = moment(p_date);
-        var url = 'https://www.elprisetjustnu.se/api/v1/prices/2024/11-01_SE3.json';
+        var url = 'https://www.elprisetjustnu.se/api/v1/prices/' + date.format('yyyy[/]MM-dd[_]') + config.area + '.json';
         request({ url: url, method: 'GET' }, function (error, response, body) {
             if (!error && response.statusCode == 200) {
                 var result = JSON.parse(body);
@@ -29,7 +29,7 @@ module.exports = NodeHelper.create({
                         continue
                     }
 
-                    const value = parseFloat(row.SEK_per_kWh)
+                    const value = (config.currency === 'EUR') ? parseFloat(row.EURper_kWh) : parseFloat(row.SEK_per_kWh);
                     if (isNaN(value)) {
                         continue
                     }

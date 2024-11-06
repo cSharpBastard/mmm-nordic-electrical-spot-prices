@@ -15,7 +15,9 @@
     "motion"
   ],
   "author": "Jonas Katona",
-  "contributors": [ "https://github.com/cSharpBastard/" ],
+  "contributors": [
+    "https://github.com/cSharpBastard/"
+  ],
   "license": "MIT",
   "bugs": {
     "url": "https://github.com/cSharpBastard/mmm-nordic-electrical-spot-prices/issues"
@@ -25,8 +27,12 @@
     "postinstall": "node_modules/.bin/electron-rebuild -e ../../node_modules/electron"
   },
   "dependencies": {
-    "electron": "^21.2.2",
+    "electron": "^33.1.0",
     "moment": "^2.29.4",
     "request": "^2.88.0"
+  },
+  "devDependencies": {
+    "chai": "^5.1.2",
+    "mocha": "^10.8.2"
   }
 }

@@ -3,8 +3,8 @@
 Module.register("mmm-nordic-electrical-spot-prices", {
     requiresVersion: "2.1.0",
     defaults: {
-        currency: "SEK", // can also be 'DKK', 'EUR', 'NOK'
-        area: "SE3", // See https://www.nordpoolgroup.com/en/maps/#/nordic
+        currency: "SEK", // can also be 'EUR'
+        area: "SE3", // See https://www.elprisetjustnu.se/elpris-api
         updateInterval: 3600000,
         title: "Dagens priser",
         yLegend: "Kr / kWh"
