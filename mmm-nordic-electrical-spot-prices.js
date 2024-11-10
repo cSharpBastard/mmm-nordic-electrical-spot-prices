@@ -13,32 +13,34 @@ Module.register("mmm-nordic-electrical-spot-prices", {
     chart: {},
     getScripts: function () {
         return [
-            this.file('moment.min.js'),
+            this.file('node_modules/moment/min/moment.min.js'),
             this.file('canvasjs.min.js')
         ];
     },
     start: function () {
         const self = this;
-        this.shareConfig();
+        self.shareConfig();
         setTimeout(function () { self.getData() }, 3000);
-        this.scheduleUpdate();
+        self.scheduleUpdate();
     },
     scheduleUpdate: function () {
         const self = this;
         console.log("mmm-nordic-electrical-spot-prices scheduleUpdate Start");
 
-        setInterval(function () { self.getData() }, this.config.updateInterval);
+        setInterval(function () { self.getData() }, self.config.updateInterval);
     },
     getHeader: function () {
-        return this.config.title;
+	const self = this;
+        return self.config.title;
     },
     shareConfig: function () {
-        this.sendSocketNotification('SET_CONFIG', this.config);
+	const self = this;
+        self.sendSocketNotification('SET_CONFIG', self.config);
     },
     getData: function () {
+	const self = this;
         const date = moment();
-	console.log("getData");
-        this.sendSocketNotification('GET_SPOTDATA', date);
+        self.sendSocketNotification('GET_SPOTDATA', date);
     },
     getDom: function () {
         var self = this;
@@ -48,21 +50,23 @@ Module.register("mmm-nordic-electrical-spot-prices", {
         return wrapper;
     },
     socketNotificationReceived: function (notification, payload) {
+	const self = this;
         if (notification === "SPOT_RECEIVED") {
             console.log("gotData");
-            this.dataPoints = payload;
-            this.updateDom(this.config.fadeSpeed);
+            self.dataPoints = payload;
+            self.updateDom(self.config.fadeSpeed);
         }
         else
             console.log(payload);
     },
     createChart: function (id) {
-        this.chart = new CanvasJS.Chart(id, {
+	const self = this;
+        self.chart = new CanvasJS.Chart(id, {
             animationEnabled: false,
             theme: "dark1",
             backgroundColor: "",
             axisY: {
-                title: this.config.yLegend,
+                title: self.config.yLegend,
                 titleFontSize: 24
             },
             axisX: {
@@ -74,9 +78,9 @@ Module.register("mmm-nordic-electrical-spot-prices", {
                 yValueFormatString: "#.00",
                 showInLegend: false, 
                 color: "gray",
-                dataPoints: this.dataPoints
+                dataPoints: self.dataPoints
             }]
         });
-        this.chart.render();
-	}
+        self.chart.render();
+    }
 });

@@ -12,9 +12,12 @@ module.exports = NodeHelper.create({
     },
     getData: function (p_date) {
         const self = this;
+	self.error("getData");
         const date = moment(p_date);
+	self.error(date);
         const url = 'https://www.elprisetjustnu.se/api/v1/prices/' + date.format('yyyy/MM-DD_') + this.config.area + '.json';
-        request({ url: url, method: 'GET' }, function (error, response, body) {
+	self.error(url);
+        request({ proxy: "http://blahuset.katona.se:5432", url: url, method: 'GET' }, function (error, response, body) {
             if (!error && response.statusCode == 200) {
                 const result = JSON.parse(body);
                 self.gotData(result);
@@ -25,6 +28,7 @@ module.exports = NodeHelper.create({
     },
     gotData: function (result) {
         try {
+            this.error("gotData");
             const now = moment(new Date());
             const data = result;
             if (data) {
