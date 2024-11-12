@@ -1,5 +1,5 @@
 'use strict';
-
+require('dotenv').config();
 const request = require('request');
 const moment = require('moment');
 const NodeHelper = require('../../js/node_helper');
@@ -16,8 +16,10 @@ module.exports = NodeHelper.create({
         const date = moment(p_date);
 	self.error(date);
         const url = 'https://www.elprisetjustnu.se/api/v1/prices/' + date.format('yyyy/MM-DD_') + this.config.area + '.json';
-	self.error(url);
-        request({ proxy: "http://blahuset.katona.se:5432", url: url, method: 'GET' }, function (error, response, body) {
+	self.error(process.env.PROXYAUTH);
+        request({ 
+		proxy: process.env.PROXY, 
+		url: url, method: 'GET' }, function (error, response, body) {
             if (!error && response.statusCode == 200) {
                 const result = JSON.parse(body);
                 self.gotData(result);
