@@ -5,7 +5,7 @@ Module.register("mmm-nordic-electrical-spot-prices", {
     defaults: {
         currency: "SEK", // can also be 'EUR'
         area: "SE3", // See https://www.elprisetjustnu.se/elpris-api
-        updateInterval: 3600000,
+        updateInterval: 120000,
         title: "Dagens priser",
         yLegend: "Kr / kWh"
     },
