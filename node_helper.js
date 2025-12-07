@@ -3,6 +3,7 @@ require('dotenv').config();
 const request = require('request');
 const moment = require('moment');
 const NodeHelper = require('../../js/node_helper');
+const fs = require('fs');
 
 module.exports = NodeHelper.create({
     config: {},
@@ -14,19 +15,16 @@ module.exports = NodeHelper.create({
         const self = this;
 	self.error("getData");
         const date = moment(p_date);
-	self.error(date);
         const url = 'https://www.elprisetjustnu.se/api/v1/prices/' + date.format('yyyy/MM-DD_') + this.config.area + '.json';
-	self.error(process.env.PROXYAUTH);
-        request({ 
-		proxy: process.env.PROXY, 
-		url: url, method: 'GET' }, function (error, response, body) {
-            if (!error && response.statusCode == 200) {
-                const result = JSON.parse(body);
-                self.gotData(result);
-            } else {
-		self.error(response.statusCode);
-            }
-        });
+	const filePath = '/tmp/elpriser.json';
+	fs.readFile(filePath, 'utf8', (err, data) => {
+		if(err){
+			self.error(err);
+			return;
+		}
+		const result = JSON.parse(data);
+		self.gotData(result);
+	});
     },
     gotData: function (result) {
         try {
