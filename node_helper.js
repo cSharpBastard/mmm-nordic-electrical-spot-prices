@@ -13,8 +13,9 @@ module.exports = NodeHelper.create({
     },
     getData: function (p_date) {
         const self = this;
+	self.error("getData");
         const date = moment(p_date);
-//        const url = 'https://www.elprisetjustnu.se/api/v1/prices/' + date.format('yyyy/MM-DD_') + this.config.area + '.json';
+        const url = 'https://www.elprisetjustnu.se/api/v1/prices/' + date.format('yyyy/MM-DD_') + this.config.area + '.json';
 	const filePath = '/tmp/elpriser.json';
 	fs.readFile(filePath, 'utf8', (err, data) => {
 		if(err){
