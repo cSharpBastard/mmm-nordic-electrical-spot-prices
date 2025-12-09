@@ -1,0 +1,8 @@
+.region.top.center {
+	width: 600px !important;
+}
+#chartContainer
+{
+	postion: absolute !important;
+        translate: translateX(-50%) !important;
+}
